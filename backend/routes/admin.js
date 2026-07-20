@@ -4,10 +4,19 @@ const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ExcelJS = require('exceljs');
+const rateLimit = require('express-rate-limit');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  limit: 5, // 5 tentativas de login
+  message: { error: 'Demasiadas tentativas de login falhadas. Tente novamente em 15 minutos.' },
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+});
 
 // Middleware to verify JWT
 const authenticateToken = (req, res, next) => {
@@ -24,7 +33,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 // POST /api/admin/login
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
   const { username, password } = req.body;
   
   if (username !== ADMIN_USERNAME) {

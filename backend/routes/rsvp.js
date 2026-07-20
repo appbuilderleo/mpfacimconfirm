@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
+const rateLimit = require('express-rate-limit');
+
+const rsvpLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hora
+  limit: 5, // Limite de 5 inscrições por IP por hora
+  message: { error: 'Limite de inscrições atingido a partir deste dispositivo. Tente novamente mais tarde.' },
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+});
 
 // POST /api/rsvp - Submit form
-router.post('/', async (req, res) => {
+router.post('/', rsvpLimiter, async (req, res) => {
   try {
     const { nome, email, celular, privacidade_aceite } = req.body;
 
