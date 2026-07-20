@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  :root {
+    --background: #f9fafb;
+    --foreground: #11181c;
+    --card: #ffffff;
+    --card-foreground: #11181c;
+    --popover: #ffffff;
+    --popover-foreground: #11181c;
+    --primary: #da6040; /* Claude orange accent */
+    --primary-foreground: #ffffff;
+    --secondary: #f0f1f3;
+    --secondary-foreground: #11181c;
+    --muted: #f0f1f3;
+    --muted-foreground: #687076;
+    --accent: #f0f1f3;
+    --accent-foreground: #11181c;
+    --destructive: #e5484d;
+    --destructive-foreground: #ffffff;
+    --border: #e6e8eb;
+    --input: #e6e8eb;
+    --ring: #da6040;
+  }
+ 
+  .dark {
+    --background: #111110;
+    --foreground: #ececed;
+    --card: #191918;
+    --card-foreground: #ececed;
+    --popover: #191918;
+    --popover-foreground: #ececed;
+    --primary: #da6040;
+    --primary-foreground: #ffffff;
+    --secondary: #272725;
+    --secondary-foreground: #ececed;
+    --muted: #272725;
+    --muted-foreground: #909090;
+    --accent: #272725;
+    --accent-foreground: #ececed;
+    --destructive: #e5484d;
+    --destructive-foreground: #ffffff;
+    --border: #2c2c2a;
+    --input: #2c2c2a;
+    --ring: #da6040;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
