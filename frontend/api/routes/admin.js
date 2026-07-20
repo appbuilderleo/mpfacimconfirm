@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 const ExcelJS = require('exceljs');
 const rateLimit = require('express-rate-limit');
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecretjwtkey_change_in_production';
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '$2b$10$blK41VoiZSVyoPL8ixIlNeWPo/DRbP30urimyOCtR5zB7CIdt4on6';
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
@@ -50,7 +50,7 @@ router.post('/login', loginLimiter, async (req, res) => {
     }
   } catch (err) {
     console.error('Error during login:', err);
-    res.status(500).json({ error: 'Erro interno' });
+    res.status(500).json({ error: 'Erro interno', details: err.message });
   }
 });
 
