@@ -85,7 +85,16 @@ const RSVPForm = () => {
       await axios.post(apiUrl, data);
       setSuccess(true);
     } catch (err) {
-      setErrorMsg(err.response?.data?.error || 'Erro ao submeter formulário. Tente novamente.');
+      let errorText = 'Erro ao submeter formulário. Tente novamente.';
+      const apiError = err.response?.data?.error;
+      if (apiError) {
+        if (typeof apiError === 'string') {
+          errorText = apiError;
+        } else if (apiError.message) {
+          errorText = apiError.message;
+        }
+      }
+      setErrorMsg(errorText);
     } finally {
       setIsLoading(false);
     }
