@@ -81,7 +81,7 @@ const RSVPForm = () => {
     setIsLoading(true);
     setErrorMsg('');
     try {
-      const apiUrl = 'http://localhost:5000/api/rsvp';
+      const apiUrl = import.meta.env.PROD ? '/api/rsvp' : 'http://localhost:5000/api/rsvp';
       await axios.post(apiUrl, data);
       setSuccess(true);
     } catch (err) {

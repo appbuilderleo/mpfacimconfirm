@@ -40,7 +40,9 @@ const AdminDashboard = () => {
   const fetchData = async (page) => {
     setIsLoading(true);
     try {
-      const apiUrl = `http://localhost:5000/api/admin/inscritos?page=${page}&limit=20`;
+      const apiUrl = import.meta.env.PROD 
+        ? `/api/admin/inscritos?page=${page}&limit=20` 
+        : `http://localhost:5000/api/admin/inscritos?page=${page}&limit=20`;
       const res = await axios.get(apiUrl, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -62,7 +64,7 @@ const AdminDashboard = () => {
 
   const handleExport = async () => {
     try {
-      const apiUrl = 'http://localhost:5000/api/admin/exportar';
+      const apiUrl = import.meta.env.PROD ? '/api/admin/exportar' : 'http://localhost:5000/api/admin/exportar';
       const response = await axios.get(apiUrl, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob', // Important for file download

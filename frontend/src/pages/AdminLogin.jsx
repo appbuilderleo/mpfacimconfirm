@@ -25,7 +25,7 @@ const AdminLogin = () => {
     setIsLoading(true);
     setErrorMsg('');
     try {
-      const apiUrl = 'http://localhost:5000/api/admin/login';
+      const apiUrl = import.meta.env.PROD ? '/api/admin/login' : 'http://localhost:5000/api/admin/login';
       const res = await axios.post(apiUrl, { username, password });
       
       // Save token and redirect
