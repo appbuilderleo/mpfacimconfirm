@@ -10,8 +10,8 @@ import {
   CircularProgress,
   InputAdornment
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { ThemeToggle } from '../components/ThemeToggle';
 
 const AdminLogin = () => {
@@ -46,10 +46,12 @@ const AdminLogin = () => {
       </Box>
       <Container maxWidth="sm" className="flex-1 flex flex-col justify-center py-8">
         <Box className="w-full max-w-md mx-auto bg-card/30 backdrop-blur-xl p-8 rounded-3xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.07)] relative z-10 text-center">
-          <Box className="flex justify-center mb-4">
-            <Box className="bg-primary/10 p-3 rounded-full">
-              <LockOutlinedIcon className="text-primary text-4xl" />
-            </Box>
+          <Box className="flex justify-center mb-6">
+            <img 
+              src="/Marca MP2.png" 
+              alt="Logo Maputo Província" 
+              className="h-16 w-auto object-contain"
+            />
           </Box>
           
           <Typography variant="h5" className="font-bold text-foreground mb-6">
@@ -62,7 +64,7 @@ const AdminLogin = () => {
             </Box>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="flex flex-col gap-5">
             <TextField
               fullWidth
               placeholder="Utilizador"
