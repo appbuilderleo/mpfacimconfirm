@@ -105,17 +105,37 @@ router.get('/exportar', authenticateToken, async (req, res) => {
     worksheet.getRow(1).fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FF000000' } // Black background
+      fgColor: { argb: 'FFDA6040' } // Cor primária do sistema (laranja/vermelho)
     };
     worksheet.autoFilter = 'A1:D1';
     worksheet.views = [{ state: 'frozen', xSplit: 0, ySplit: 1 }];
 
+    // Add borders to the header
+    worksheet.getRow(1).eachCell((cell) => {
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+    });
+
     rows.forEach((row) => {
-      worksheet.addRow({
+      const addedRow = worksheet.addRow({
         nome: row.nome,
         email: row.email,
         celular: row.celular,
         data_confirmacao: new Date(row.data_confirmacao).toLocaleString('pt-MZ')
+      });
+      
+      // Add borders to each cell in the row
+      addedRow.eachCell((cell) => {
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+          left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+          bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+          right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+        };
       });
     });
 

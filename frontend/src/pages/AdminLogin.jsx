@@ -7,10 +7,11 @@ import {
   Typography, 
   TextField, 
   Button, 
-  Paper,
-  CircularProgress
+  CircularProgress,
+  InputAdornment
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { ThemeToggle } from '../components/ThemeToggle';
 
 const AdminLogin = () => {
@@ -43,8 +44,8 @@ const AdminLogin = () => {
       <Box className="w-full flex justify-end p-4">
         <ThemeToggle />
       </Box>
-      <Container maxWidth="xs" className="flex-1 flex flex-col justify-center py-8">
-        <Paper elevation={0} className="p-8 rounded-2xl bg-card border border-border shadow-sm text-center">
+      <Container maxWidth="sm" className="flex-1 flex flex-col justify-center py-8">
+        <Box className="w-full max-w-md mx-auto bg-card/30 backdrop-blur-xl p-8 rounded-3xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.07)] relative z-10 text-center">
           <Box className="flex justify-center mb-4">
             <Box className="bg-primary/10 p-3 rounded-full">
               <LockOutlinedIcon className="text-primary text-4xl" />
@@ -64,20 +65,58 @@ const AdminLogin = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <TextField
               fullWidth
-              label="Utilizador"
+              placeholder="Utilizador"
               variant="outlined"
+              size="small"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonOutlineOutlinedIcon className="text-primary/70" />
+                  </InputAdornment>
+                )
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '9999px',
+                  backgroundColor: 'var(--color-card)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.03)',
+                  paddingLeft: 1.5,
+                  '& fieldset': { borderColor: 'transparent' },
+                  '&:hover fieldset': { borderColor: 'transparent' },
+                  '&.Mui-focused fieldset': { borderColor: 'var(--color-primary)', borderWidth: '1px' }
+                }
+              }}
             />
             <TextField
               fullWidth
-              label="Palavra-passe"
+              placeholder="Palavra-passe"
               type="password"
               variant="outlined"
+              size="small"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOutlinedIcon className="text-primary/70" />
+                  </InputAdornment>
+                )
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '9999px',
+                  backgroundColor: 'var(--color-card)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.03)',
+                  paddingLeft: 1.5,
+                  '& fieldset': { borderColor: 'transparent' },
+                  '&:hover fieldset': { borderColor: 'transparent' },
+                  '&.Mui-focused fieldset': { borderColor: 'var(--color-primary)', borderWidth: '1px' }
+                }
+              }}
             />
             <Button
               type="submit"
@@ -86,12 +125,12 @@ const AdminLogin = () => {
               color="primary"
               size="large"
               disabled={isLoading}
-              className="mt-4 py-3 font-bold shadow-none"
+              className="mt-6 py-3 text-base font-bold shadow-md hover:shadow-lg rounded-full"
             >
               {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Entrar'}
             </Button>
           </form>
-        </Paper>
+        </Box>
       </Container>
     </Box>
   );
