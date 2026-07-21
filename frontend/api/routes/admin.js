@@ -94,31 +94,52 @@ router.get('/exportar', authenticateToken, async (req, res) => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Inscritos');
 
+    // Add Document Title
+    worksheet.mergeCells('A1:D1');
+    const titleCell = worksheet.getCell('A1');
+    titleCell.value = 'Relatório de Inscrições - Maputo Província a caminho da 61ª Edição FACIM 2026';
+    titleCell.font = { name: 'Arial', size: 16, bold: true };
+    titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getRow(1).height = 40;
+
+    // Add empty row
+    worksheet.addRow([]);
+
+    // Set Columns
     worksheet.columns = [
-      { header: 'Nome', key: 'nome', width: 30 },
-      { header: 'Email', key: 'email', width: 30 },
-      { header: 'Celular', key: 'celular', width: 20 },
-      { header: 'Data de Confirmação', key: 'data_confirmacao', width: 25 },
+      { key: 'nome', width: 30 },
+      { key: 'email', width: 30 },
+      { key: 'celular', width: 20 },
+      { key: 'data_confirmacao', width: 25 },
     ];
 
-    worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
-    worksheet.getRow(1).fill = {
+    // Add Header Row
+    const headerRow = worksheet.addRow({
+      nome: 'Nome',
+      email: 'Email',
+      celular: 'Celular',
+      data_confirmacao: 'Data de Confirmação'
+    });
+
+    headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+    headerRow.fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FFDA6040' } // Cor primária do sistema (laranja/vermelho)
+      fgColor: { argb: 'FFDA6040' } // Cor primária do sistema
     };
-    worksheet.autoFilter = 'A1:D1';
-    worksheet.views = [{ state: 'frozen', xSplit: 0, ySplit: 1 }];
-
-    // Add borders to the header
-    worksheet.getRow(1).eachCell((cell) => {
+    
+    // Add borders to header
+    headerRow.eachCell((cell) => {
       cell.border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
+        top: { style: 'thin', color: { argb: 'FF000000' } },
+        left: { style: 'thin', color: { argb: 'FF000000' } },
+        bottom: { style: 'thin', color: { argb: 'FF000000' } },
+        right: { style: 'thin', color: { argb: 'FF000000' } }
       };
     });
+
+    worksheet.autoFilter = 'A3:D3';
+    worksheet.views = [{ state: 'frozen', xSplit: 0, ySplit: 3 }];
 
     rows.forEach((row) => {
       const addedRow = worksheet.addRow({
@@ -128,13 +149,13 @@ router.get('/exportar', authenticateToken, async (req, res) => {
         data_confirmacao: new Date(row.data_confirmacao).toLocaleString('pt-MZ')
       });
       
-      // Add borders to each cell in the row
+      // Add solid black borders to each cell in the data row
       addedRow.eachCell((cell) => {
         cell.border = {
-          top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
-          left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
-          bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
-          right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+          top: { style: 'thin', color: { argb: 'FF000000' } },
+          left: { style: 'thin', color: { argb: 'FF000000' } },
+          bottom: { style: 'thin', color: { argb: 'FF000000' } },
+          right: { style: 'thin', color: { argb: 'FF000000' } }
         };
       });
     });
